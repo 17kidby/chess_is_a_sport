@@ -23,6 +23,10 @@ public class ChessUtils {
         return Integer.toString(r+1);
     }
 
+    public static String getPositionFromCoords(int row, int col){
+        return columnToLetter(col) + rowToNumber(row);
+    }
+
 
 
 

@@ -34,6 +34,9 @@ public class Piece {
     }
 
     public boolean isValidMove(String targetPosition){
+        if (getPosition().equals(targetPosition)){
+            return false;
+        }
         return true;
     }
 

@@ -1,4 +1,6 @@
 import javax.xml.validation.TypeInfoProvider;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Chess {
@@ -12,6 +14,23 @@ public class Chess {
             board[1][c] = new Piece(1, c, true);
             board[6][c] = new Piece(6, c, false);
         }
+        //create kings
+        board[0][4] = new King("E1", true);
+        board[7][4] = new King("E8", false);
+
+        //create castles
+        board[0][0] = new Rook("A1", true);
+        board[0][7] = new Rook("H1", true);
+        board[7][0] = new Rook("A8", false);
+        board[7][7] = new Rook("H8", false);
+
+        //create knights
+        board[0][1] = new Knight("B1", true);
+        board[0][6] = new Knight("G1", true);
+        board[7][1] = new Knight("B8", false);
+        board[7][6] = new Knight("G8", false);
+
+
     }
 
     // print current board layout
@@ -21,7 +40,7 @@ public class Chess {
                 if (board[r][c] != null) {
                     System.out.print(board[r][c].getSymbol() + " ");
                 }else{
-                    System.out.print(" ");   // blank square
+                    System.out.print("   ");   // blank square
                 }
             }
             System.out.println();   // print new row
@@ -48,10 +67,23 @@ public class Chess {
             validMove = toMove.isValidMove(endPos);
         }
         if (validMove){
+            // check for pieces to run over
+            ArrayList<String> squares == toMove.passThrough(endPos);
+
+
             System.out.println(toMove.getSymbol() + " moves to " + endPos);
+            int startRow = ChessUtils.getRowFromPosition(startPos);
+            int startColumn = ChessUtils.getColumnFromPosition(startPos);
+            int targetRow = ChessUtils.getRowFromPosition((endPos));
+            int targetColumn = ChessUtils.getColumnFromPosition(endPos);
+
+            board[targetRow][targetColumn] = board[startRow][startColumn];
+            board[startRow][startColumn] = null;
+
         }else{
             System.out.println("You cant do that >:(");
         }
+
 
     }
 

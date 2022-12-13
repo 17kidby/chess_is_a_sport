@@ -9,6 +9,8 @@ public class Main {
         Chess game = new Chess();
         game.display();
         game.move();
+        game.display();
+
 
     }
 }
