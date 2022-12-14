@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Piece {
 
     private int row;
@@ -37,7 +39,12 @@ public class Piece {
         if (getPosition().equals(targetPosition)){
             return false;
         }
+
         return true;
+    }
+
+    public ArrayList<String> passesThrough(String pos){
+        return new ArrayList<>();
     }
 
 

@@ -67,11 +67,18 @@ public class Chess {
             validMove = toMove.isValidMove(endPos);
         }
         if (validMove){
-            // check for pieces to run over
-            ArrayList<String> squares == toMove.passThrough(endPos);
-
-
             System.out.println(toMove.getSymbol() + " moves to " + endPos);
+
+            // check for pieces to run over
+            ArrayList<String> squares = toMove.passesThrough(endPos);
+            if (squares.size()>0) {
+                System.out.print(" passing through ");
+                for (String p : squares) {
+                    System.out.print(p + ", ");
+                }
+            }
+            System.out.println();
+
             int startRow = ChessUtils.getRowFromPosition(startPos);
             int startColumn = ChessUtils.getColumnFromPosition(startPos);
             int targetRow = ChessUtils.getRowFromPosition((endPos));

@@ -26,7 +26,7 @@ public class Rook extends Piece{
     }
 
     // gives all the positions the rook will smash through
-    public ArrayList<String> passThrough(String targetPos){
+    public ArrayList<String> passesThrough(String targetPos){
         int startRow = ChessUtils.getRowFromPosition(getPosition());
         int startColumn = ChessUtils.getColumnFromPosition(getPosition());
         int targetRow = ChessUtils.getRowFromPosition((targetPos));
