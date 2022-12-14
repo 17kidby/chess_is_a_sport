@@ -34,9 +34,9 @@ public class Rook extends Piece{
 
         ArrayList<String> squares = new ArrayList<>();
         if (isValidMove(targetPos)){
-            int row= startRow+1;
+            int row= startRow;
             do {
-                int col = startColumn+1;
+                int col = startColumn;
                 do{
                     squares.add(ChessUtils.getPositionFromCoords(row, col));
 
@@ -47,6 +47,7 @@ public class Rook extends Piece{
 
 
         }
+        squares.remove(0);
         return squares;
 
     }
