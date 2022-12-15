@@ -35,6 +35,15 @@ public class Chess {
 
     // print current board layout
     public void display() {
+        System.out.print("");
+        int temp = 65;
+        for (int i=0; i<8; i++){
+            System.out.print((char)temp);
+            temp = temp+1;
+            System.out.print(" ");
+        }
+        System.out.println();
+
         for (int r=0; r<8; r++){
             for (int c=0; c<8; c++){
                 if (board[r][c] != null) {
