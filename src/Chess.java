@@ -35,23 +35,26 @@ public class Chess {
 
     // print current board layout
     public void display() {
-        System.out.print("");
+        System.out.print("      ");
         int temp = 65;
         for (int i=0; i<8; i++){
             System.out.print((char)temp);
             temp = temp+1;
-            System.out.print(" ");
+            System.out.print("   ");
         }
         System.out.println();
 
         for (int r=0; r<8; r++){
+            System.out.print(r+1);
+            System.out.print("     ");
             for (int c=0; c<8; c++){
                 if (board[r][c] != null) {
-                    System.out.print(board[r][c].getSymbol() + " ");
+                    System.out.print(board[r][c].getSymbol() + "   ");
                 }else{
-                    System.out.print("   ");   // blank square
+                    System.out.print("     ");   // blank square
                 }
             }
+
             System.out.println();   // print new row
         }
     }
@@ -71,15 +74,48 @@ public class Chess {
         System.out.print("Enter the square to move to ");
         String endPos = input.nextLine();
         Piece toMove = getPieceAt(startPos);
+
+        int startRow = ChessUtils.getRowFromPosition(startPos);
+        int startColumn = ChessUtils.getColumnFromPosition(startPos);
+        int targetRow = ChessUtils.getRowFromPosition((endPos));
+        int targetColumn = ChessUtils.getColumnFromPosition(endPos);
+
         boolean validMove = false;
         if (toMove != null){
             validMove = toMove.isValidMove(endPos);
         }
+
+        // check to see if there is a piece at a target
+        if (board[targetRow][targetColumn] != null){
+            boolean currentColour = board[startRow][startColumn].getRacism();
+            boolean targetColour = board[targetRow][targetColumn].getRacism();
+            char target = board[targetRow][targetColumn].getSymbol();
+
+            // capture or not-valid move
+            if (currentColour == targetColour){
+                validMove = false;
+            }else{
+                validMove = true;
+                System.out.println(toMove.getSymbol()+ " has captured " + target);
+            }
+        }
+
+        // check for pieces to run over
+        ArrayList<String> squares = toMove.passesThrough(endPos);
+        for (String p : squares) {
+            int row = ChessUtils.getRowFromPosition(p);
+            int column = ChessUtils.getColumnFromPosition(p);
+
+            // if there is a piece in the way the move cannot take place
+            if (board[row][column] != null){
+                validMove = false;
+            }
+        }
+
         if (validMove){
             System.out.println(toMove.getSymbol() + " moves to " + endPos);
 
-            // check for pieces to run over
-            ArrayList<String> squares = toMove.passesThrough(endPos);
+
             if (squares.size()>0) {
                 System.out.print(" passing through ");
                 for (String p : squares) {
@@ -88,10 +124,7 @@ public class Chess {
             }
             System.out.println();
 
-            int startRow = ChessUtils.getRowFromPosition(startPos);
-            int startColumn = ChessUtils.getColumnFromPosition(startPos);
-            int targetRow = ChessUtils.getRowFromPosition((endPos));
-            int targetColumn = ChessUtils.getColumnFromPosition(endPos);
+
 
             board[targetRow][targetColumn] = board[startRow][startColumn];
             board[startRow][startColumn] = null;

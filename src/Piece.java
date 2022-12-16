@@ -27,6 +27,9 @@ public class Piece {
 
     }
 
+    public boolean getRacism(){
+        return racism;
+    }
 
     public char getSymbol(){
         if (racism){
